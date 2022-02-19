@@ -11,16 +11,19 @@ import styles from './home.module.scss';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import {BiUser} from 'react-icons/bi'
 
+import { ptBR } from 'date-fns/locale';
+import { format, parseISO } from 'date-fns';
+
 
 interface Post {
- 
+
   uid?: string;
   first_publication_date: string | null;
   data: {
     title: string;
     subtitle: string;
     author: string;
-  
+
   };
 }
 
@@ -69,20 +72,19 @@ interface HomeProps {
 
   return (
     <div className={styles.container}>
-       
+
        { posts?.map(post => (
-              
+
               <Link key={post.uid}  href={`/post/${post.uid}`}>
                 <a >
                   <div  className={styles.postContainer}>
                       <h2>{post.data.title}</h2>
                       <p>{post.data.subtitle}</p>
                       <div className={styles.postInfo}>
-                        <p><AiOutlineCalendar /> {new Date(post.first_publication_date).toLocaleDateString('pt-BR', {
-                        day:'2-digit',
-                        month: 'short',
-                        year: 'numeric'
-                      })  }</p>
+                        <p><AiOutlineCalendar />
+                        {format(parseISO(post.first_publication_date), 'dd MMM yyyy', {
+                  locale: ptBR,
+                })}</p>
                         <p><BiUser/> {post.data.author}</p>
                       </div>
                   </div>
@@ -92,18 +94,18 @@ interface HomeProps {
 
         {nextPage && (
             <button onClick={handlePagination} >
-              Carregar mais posts 
+              Carregar mais posts
             </button>
           )}
-         
+
     </div>
 
-    
+
   )
  }
 
  export const getStaticProps = async () => {
- 
+
   const prismic = getPrismicClient();
 
   const postsResponse = await prismic.query(
@@ -111,7 +113,7 @@ interface HomeProps {
   {
     fetch: ['post.title', 'post.subtitle', 'post.author'],
     pageSize: 1,
-   
+
   }
 );
 
@@ -119,7 +121,7 @@ interface HomeProps {
       return{
         uid: post.uid,
         first_publication_date:  post.first_publication_date,
-     
+
         data: {
           title: post.data.title,
           subtitle: post.data.subtitle,
@@ -128,7 +130,7 @@ interface HomeProps {
       }
   })
 
- 
+
   return {
     props:{
       postsPagination: {

@@ -46,7 +46,7 @@ const mockedQueryReturn = {
 
 const mockedGetByUIDReturn = {
   uid: 'como-utilizar-hooks',
-  first_publication_date: '2022-01-31T19:25:28+0000',
+  first_publication_date: '2021-03-25T19:25:28+0000',
   data: {
     title: 'Como utilizar Hooks',
     subtitle: 'Pensando em sincronização em vez de ciclos de vida',
@@ -251,7 +251,7 @@ describe('Post', () => {
     render(<Post post={postProps} />);
 
     screen.getByText('Como utilizar Hooks');
-    screen.getByText('31 de jan. de 2022');
+    screen.getByText('25 mar 2021');
     screen.getByText('Joseph Oliveira');
     screen.getByText('4 min');
 

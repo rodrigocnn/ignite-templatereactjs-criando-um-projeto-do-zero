@@ -5,6 +5,8 @@ import { getPrismicClient } from '../../services/prismic';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { BiUser, BiTimeFive } from 'react-icons/bi';
 import { useRouter } from 'next/router';
+import { format, parseISO } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 import commonStyles from '../../styles/common.module.scss';
 import styles from './post.module.scss';
@@ -35,7 +37,7 @@ interface PostProps {
 
 
   const router = useRouter();
-  
+
   if (router.isFallback) {
     return <div>Carregando...</div>;
   }
@@ -44,17 +46,15 @@ interface PostProps {
       return(
         <div className={styles.postContent}>
            <img src={post.data.banner.url} alt={post.data.banner.alt} />
-        
+
            <div  className={styles.postContainer}>
                       <h2>{post.data.title}</h2>
                       <p>{post.data.subtitle}</p>
                       <div className={styles.postInfo}>
-                        <p><AiOutlineCalendar /> 
-                          {new Date(post.first_publication_date).toLocaleDateString('pt-BR', {
-                            day:'2-digit',
-                            month: 'short',
-                            year: 'numeric'
-                          })  } </p>
+                        <p><AiOutlineCalendar />
+                        {format(parseISO(post.first_publication_date), 'dd MMM yyyy', {
+                  locale: ptBR,
+                })}</p>
                         <p><BiUser/> {post.data.author}</p>
                         <p><BiTimeFive/> 4 min</p>
                       </div>
@@ -74,11 +74,11 @@ interface PostProps {
 
                   </div>
 
-                
 
-   
+
+
           </div>
-   
+
       )
  }
 
@@ -112,6 +112,6 @@ interface PostProps {
       post
     }
   }
- 
+
 
  };
