@@ -1,0 +1,21 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root{
+  
+  --black: #1A1D23;
+  --white: #FFFFFF;
+  --gray: #F8F8F8;
+  --gray: #D7D7D7;
+  --rose:  #FF57B2;
+}
+
+body{
+  background: var(--black); 
+  font: 400 1rem 'Inter', sans-serif;
+}
+
+
